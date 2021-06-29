@@ -22,4 +22,12 @@ public class GlobalExceptionHandler {
         e.printStackTrace();
         return R.error().message("ArithmeticException异常");
     }
+
+    @ExceptionHandler(MyExpection.class)
+    @ResponseBody
+    public R error(MyExpection e){
+        e.printStackTrace();
+        return R.error().message(e.getMessage()).code(e.getCode());
+    }
+
 }
