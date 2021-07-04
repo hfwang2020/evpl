@@ -28,6 +28,7 @@ import java.util.List;
 @Api(tags = "讲师管理")
 @RestController
 @RequestMapping("/eduservice/teacher")
+@CrossOrigin
 public class EduTeacherController {
     @Autowired
     private EduTeacherService teacherService;
@@ -41,7 +42,7 @@ public class EduTeacherController {
     }
 
     @ApiOperation(value = "逻辑删除讲师")
-    @DeleteMapping("{id}")
+    @DeleteMapping("delete/{id}")
     public R removeTeacher(@ApiParam(name = "id", value = "讲师ID", required = true)
                            @PathVariable String id) {
         boolean flag = teacherService.removeById(id);
@@ -91,7 +92,7 @@ public class EduTeacherController {
         if(!StringUtils.isEmpty(end)) {
             wrapper.le("gmt_create",end);
         }
-
+        wrapper.orderByDesc("gmt_create");
         teacherService.page(pageTeacher,wrapper);
 
         long total = pageTeacher.getTotal();
